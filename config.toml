@@ -1,0 +1,117 @@
+# herdr configuration — ported from ~/.config/tmux/tmux.conf
+#
+# Mapping notes live next to each setting. Anything tmux did that herdr does
+# natively (1-based tabs, splits inheriting the current directory) is called
+# out rather than configured, so the two files stay easy to diff by eye.
+
+[terminal]
+# tmux: bind-key n/v split-window -c "#{pane_current_path}"
+# "follow" makes every new pane/tab/workspace inherit the source pane's cwd,
+# which is what the -c flag did on each split binding.
+new_cwd = "follow"
+
+[update]
+channel = "stable"
+
+[keys]
+# tmux: unbind C-b; set -g prefix C-Space
+prefix = "ctrl+space"
+
+# tmux: bind h/j/k/l select-pane -L/-D/-U/-R
+# These are already herdr's defaults; stated explicitly to mirror tmux.conf.
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+
+# tmux: bind-key v split-window -h  (new pane to the right)
+# herdr calls this "vertical" after the divider's orientation, so the same
+# key lands on the same layout despite the inverted name. Also the default.
+split_vertical = "prefix+v"
+
+# tmux: bind-key n split-window -v  (new pane below)
+# herdr's default for this is prefix+minus; moved to n to match muscle memory.
+split_horizontal = "prefix+n"
+
+# prefix+n was herdr's next_tab. Unset rather than left double-bound, because
+# `herdr config check` does not flag two actions sharing a key — it just picks
+# one. tmux ended up in exactly this state too: `bind n` shadowed next-window
+# while prefix+p stayed previous-window. Bind this to a free key (e.g.
+# "prefix+]") if the asymmetry turns out to annoy you.
+next_tab = ""
+
+# tmux: set-window-option -g mode-keys vi
+# herdr ships one copy mode with its own bindings, but the entry key is the
+# same as tmux's, so the habit carries over.
+copy_mode = "prefix+["
+
+[theme]
+# tmux: set -g @catppuccin_flavor 'frappe'
+# herdr 0.8.0 only ships `catppuccin` (Mocha) and `catppuccin-latte` — there is
+# no Frappe build, and an unknown theme name is silently ignored rather than
+# rejected. So: start from catppuccin and override every token below with the
+# Frappe values already in use across this machine.
+name = "catppuccin"
+
+# Catppuccin Frappe. These are the same hex values omarchy is currently
+# themeing ghostty/waybar/etc. with (~/.config/omarchy/current/theme), so herdr
+# matches the rest of the desktop rather than only matching tmux.
+#
+# Regenerate this block after an omarchy theme switch:
+#   ./scripts/sync-omarchy-theme.sh
+# BEGIN THEME TOKENS
+[theme.custom]
+# Sidebar/panel background. Frappe mantle — the same colour the catppuccin
+# tmux plugin uses for the status bar (@_ctp_status_bg = @thm_mantle).
+panel_bg = "#292c3c"
+surface_dim = "#232634"
+surface0 = "#414559"
+surface1 = "#51576d"
+overlay0 = "#737994"
+overlay1 = "#838ba7"
+text = "#c6d0f5"
+subtext0 = "#a5adce"
+# omarchy's declared accent for this theme (colors.toml `accent`).
+accent = "#8caaee"
+blue = "#8caaee"
+teal = "#81c8be"
+green = "#a6d189"
+yellow = "#e5c890"
+peach = "#ef9f76"
+red = "#e78284"
+mauve = "#ca9ee6"
+# END THEME TOKENS
+
+[ui]
+# tmux: set -g mouse on
+mouse_capture = true
+
+# tmux: set -g set-clipboard external, plus tmux-yank's copy-pipe to wl-copy.
+# herdr copies the selection straight to the system clipboard.
+copy_on_select = true
+
+# tmux drew pane borders by default; keep the equivalent.
+pane_borders = true
+pane_gaps = true
+
+# The sidebar replaces the catppuccin status line. Rows below are the
+# equivalent of scripts/pane_label.sh.
+[ui.sidebar.agents]
+rows = [["state_icon", "workspace", "tab"], ["agent"]]
+
+# pane_label.sh preferred the OSC 2 pane title so Claude Code tabs showed the
+# live conversation summary, and stripped the leading spinner glyph. herdr has
+# that built in as `terminal_title_stripped`, so the script is not needed.
+[ui.sidebar.agents.rows_by_agent]
+claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"], ["agent"]]
+codex = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"], ["agent"]]
+
+# pane_label.sh fell back to the git branch, then the directory basename.
+[ui.sidebar.spaces]
+rows = [["state_icon", "workspace"], ["branch", "git_status"]]
+
+[advanced]
+# tmux: set -g history-limit 50000
+# herdr caps scrollback in bytes, not lines, so this is not a direct
+# translation. 20 MB per pane comfortably exceeds 50k lines of normal output.
+scrollback_limit_bytes = 20000000
