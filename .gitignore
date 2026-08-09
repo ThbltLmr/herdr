@@ -1,5 +1,5 @@
 *.log
 *.sock
-herdr.json
-sessions/
+session.json
+.plugins.lock
 plugins/

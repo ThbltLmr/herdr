@@ -57,16 +57,12 @@ previous_agent = "prefix+shift+a"
 # herdr 0.8.0 only ships `catppuccin` (Mocha) and `catppuccin-latte` — there is
 # no Frappe build, and an unknown theme name is silently ignored rather than
 # rejected. So: start from catppuccin and override every token below with the
-# Frappe values already in use across this machine.
+# published Frappe palette.
 name = "catppuccin"
 
-# Catppuccin Frappe. These are the same hex values omarchy is currently
-# themeing ghostty/waybar/etc. with (~/.config/omarchy/current/theme), so herdr
-# matches the rest of the desktop rather than only matching tmux.
-#
-# Regenerate this block after an omarchy theme switch:
-#   ./scripts/sync-omarchy-theme.sh
-# BEGIN THEME TOKENS
+# Catppuccin Frappe, pinned. Same values the catppuccin tmux plugin renders
+# under @catppuccin_flavor 'frappe', so this stays fixed across machines
+# regardless of what the host desktop is themed with.
 [theme.custom]
 # Sidebar/panel background. Frappe mantle — the same colour the catppuccin
 # tmux plugin uses for the status bar (@_ctp_status_bg = @thm_mantle).
@@ -78,7 +74,7 @@ overlay0 = "#737994"
 overlay1 = "#838ba7"
 text = "#c6d0f5"
 subtext0 = "#a5adce"
-# omarchy's declared accent for this theme (colors.toml `accent`).
+# Frappe blue.
 accent = "#8caaee"
 blue = "#8caaee"
 teal = "#81c8be"
@@ -87,7 +83,6 @@ yellow = "#e5c890"
 peach = "#ef9f76"
 red = "#e78284"
 mauve = "#ca9ee6"
-# END THEME TOKENS
 
 [ui]
 # tmux: set -g mouse on
