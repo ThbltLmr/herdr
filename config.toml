@@ -45,6 +45,13 @@ next_tab = ""
 # same as tmux's, so the habit carries over.
 copy_mode = "prefix+["
 
+# No tmux equivalent. herdr leaves the agent panel's navigation unbound, so
+# without these there is no keyboard route into the sidebar's agent list.
+# Paired with ui.agent_panel_sort = "priority" below, this cycles agents in
+# attention order rather than walking a static list.
+next_agent = "prefix+a"
+previous_agent = "prefix+shift+a"
+
 [theme]
 # tmux: set -g @catppuccin_flavor 'frappe'
 # herdr 0.8.0 only ships `catppuccin` (Mocha) and `catppuccin-latte` — there is
@@ -93,6 +100,10 @@ copy_on_select = true
 # tmux drew pane borders by default; keep the equivalent.
 pane_borders = true
 pane_gaps = true
+
+# Order the agent panel by attention queue (blocked/finished first) instead of
+# grouping by space, so prefix+a walks agents in the order they need input.
+agent_panel_sort = "priority"
 
 # The sidebar replaces the catppuccin status line. Rows below are the
 # equivalent of scripts/pane_label.sh.
