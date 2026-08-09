@@ -108,9 +108,29 @@ rows = [["state_icon", "workspace", "tab"], ["agent"]]
 # pane_label.sh preferred the OSC 2 pane title so Claude Code tabs showed the
 # live conversation summary, and stripped the leading spinner glyph. herdr has
 # that built in as `terminal_title_stripped`, so the script is not needed.
+#
+# herdr 0.8.0 has no per-agent icon: sidebar rows reject literal glyphs, and
+# `state_icon` tracks lifecycle state (working/blocked/idle), not which agent
+# is running. Tinting the `agent` token is the static stand-in — each kind gets
+# a distinct colour so the panel is scannable without reading names. Hexes are
+# spelled out because inline styles take colours, not [theme.custom] token
+# names; these three are the peach/teal/mauve already defined above.
 [ui.sidebar.agents.rows_by_agent]
-claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"], ["agent"]]
-codex = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"], ["agent"]]
+claude = [
+  ["state_icon", "workspace", "tab"],
+  ["terminal_title_stripped"],
+  [{ token = "agent", fg = "#ef9f76", bold = true }],
+]
+codex = [
+  ["state_icon", "workspace", "tab"],
+  ["terminal_title_stripped"],
+  [{ token = "agent", fg = "#81c8be", bold = true }],
+]
+pi = [
+  ["state_icon", "workspace", "tab"],
+  ["terminal_title_stripped"],
+  [{ token = "agent", fg = "#ca9ee6", bold = true }],
+]
 
 # pane_label.sh fell back to the git branch, then the directory basename.
 [ui.sidebar.spaces]

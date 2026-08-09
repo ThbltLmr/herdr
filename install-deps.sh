@@ -4,7 +4,7 @@
 # Idempotent — safe to re-run, mirrors ~/.config/tmux/install-deps.sh.
 set -euo pipefail
 
-INTEGRATIONS=(claude codex)
+INTEGRATIONS=(claude codex pi)
 
 if command -v herdr >/dev/null 2>&1; then
   # `herdr update` only manages installs made by herdr's own installer;
