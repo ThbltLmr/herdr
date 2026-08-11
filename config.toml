@@ -40,6 +40,10 @@ split_horizontal = "prefix+n"
 # "prefix+]") if the asymmetry turns out to annoy you.
 next_tab = ""
 
+# New tabs are created immediately with generated names. Rename the current
+# tab explicitly when its role becomes clear.
+rename_tab = "prefix+shift+t"
+
 # tmux: set-window-option -g mode-keys vi
 # herdr ships one copy mode with its own bindings, but the entry key is the
 # same as tmux's, so the habit carries over.
@@ -87,6 +91,11 @@ mauve = "#ca9ee6"
 [ui]
 # tmux: set -g mouse on
 mouse_capture = true
+
+# Keep tab creation frictionless, but name workspaces up front so they do not
+# need a separate rename step afterward.
+prompt_new_tab_name = false
+prompt_new_workspace_name = true
 
 # tmux: set -g set-clipboard external, plus tmux-yank's copy-pipe to wl-copy.
 # herdr copies the selection straight to the system clipboard.
