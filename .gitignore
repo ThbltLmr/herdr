@@ -2,4 +2,5 @@
 *.sock
 session.json
 .plugins.lock
+plugins.json
 plugins/

@@ -1,0 +1,15 @@
+id = "config.agent-icons"
+name = "Agent icons"
+version = "0.1.0"
+min_herdr_version = "0.7.4"
+description = "Adds compact per-agent glyphs to the configured sidebar rows"
+platforms = ["macos", "linux"]
+
+# Restore display-only metadata after a cold server restart.
+[[startup]]
+command = ["python3", "sync.py"]
+
+# Populate the icon as soon as an agent takes ownership of a pane.
+[[events]]
+on = "pane.agent_detected"
+command = ["python3", "sync.py"]
