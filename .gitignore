@@ -4,3 +4,4 @@ session.json
 .plugins.lock
 plugins.json
 plugins/
+release-notes.json
